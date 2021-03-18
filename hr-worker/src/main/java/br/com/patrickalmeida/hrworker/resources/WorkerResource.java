@@ -17,25 +17,32 @@ import br.com.patrickalmeida.hrworker.repositories.WorkerRepository;
 @RestController
 @RequestMapping("/workers")
 public class WorkerResource {
-	
+
 	private static Logger loggger = org.slf4j.LoggerFactory.getLogger(WorkerResource.class);
 
 	@Autowired
 	private Environment environment;
-	
+
 	@Autowired
 	private WorkerRepository workerRepository;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Worker>> getAll() {
 		List<Worker> workers = workerRepository.findAll();
 		return ResponseEntity.ok(workers);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Worker> getById(@PathVariable Long id) {
-		loggger.info("PORT=" + environment.getProperty("local.server.port"));
 		
+//		try {
+//			Thread.sleep(3000L);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+		loggger.info("PORT=" + environment.getProperty("local.server.port"));
+
 		Worker worker = workerRepository.findById(id).get();
 		return ResponseEntity.ok(worker);
 	}
